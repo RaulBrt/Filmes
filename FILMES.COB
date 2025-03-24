@@ -1,0 +1,39 @@
+      *=================================================================
+      * Autor: RAUL T. BERTO
+      * Data: 24/MAR/2025
+      * Objetivo: Este programa tem a finalidade de gerenciar os dados
+      *           de um catálogo de filmes através de um menu de opções:
+      *           Cadastro, Consulta, Alteração, Exclusão e Relação
+      *=================================================================
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. MAIN.
+       DATA DIVISION.
+       FILE                    SECTION.
+       WORKING-STORAGE         SECTION.
+
+       01  WRK-AREA.
+           05 WRK-MENU-TITLE       PIC X(30).
+           05 WRK-MENU-ITEM        PIC X(30) OCCURS 7 TIMES.
+           05 WRK-MENU-SIZE        PIC 9(1).
+           05 WRK-SELECTED         PIC X(1).
+
+       PROCEDURE DIVISION.
+       MAIN-PROCEDURE.
+           PERFORM 0010-DRAW-MM.
+           STOP RUN.
+
+      *=================================================================
+       0010-DRAW-MM            SECTION.
+      *=================================================================
+           MOVE "MENU PRINCIPAL" TO WRK-MENU-TITLE.
+           MOVE "1-CADASTRO" TO WRK-MENU-ITEM(01).
+           MOVE "2-CONSULTA" TO WRK-MENU-ITEM(02).
+           MOVE "3-ALTERACAO" TO WRK-MENU-ITEM(03).
+           MOVE "4-EXCLUSAO" TO WRK-MENU-ITEM(04).
+           MOVE "5-RELACAO" TO WRK-MENU-ITEM(05).
+           MOVE "X-SAIR" TO WRK-MENU-ITEM(06).
+           MOVE 6 TO WRK-MENU-SIZE.
+
+           CALL "MENUS" USING WRK-AREA.
+       END PROGRAM MAIN.
