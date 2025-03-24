@@ -19,7 +19,6 @@
            05 LNK-MENU-ITEM        PIC X(30)
               OCCURS 7 TIMES.
            05 LNK-MENU-SIZE        PIC 9(1).
-           05 LNK-SELECTED         PIC X(1).
 
        SCREEN          SECTION.
        01  CLEAR.
@@ -33,10 +32,6 @@
            05 OPTN.
                10 LINE WRK-LINE COLUMN 05 PIC X(30) ERASE EOL
                   BACKGROUND-COLOR 0 FOREGROUND-COLOR 5 FROM WRK-ITEM.
-           05 SELCT.
-               10 LINE 12 COLUMN 05 PIC X(22) ERASE EOL
-                  BACKGROUND-COLOR 0 FOREGROUND-COLOR 7
-                  FROM "SELECIONE UMA OPCAO: ".
 
 
        PROCEDURE DIVISION USING LNK-AREA.
@@ -53,7 +48,6 @@
               MOVE LNK-MENU-ITEM(WRK-COUNT) TO WRK-ITEM
               DISPLAY OPTN
            END-PERFORM.
-           DISPLAY SELCT.
-           ACCEPT LNK-SELECTED AT 1226.
+
            GOBACK.
        END PROGRAM MENUS.

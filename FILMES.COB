@@ -12,15 +12,21 @@
        FILE                    SECTION.
        WORKING-STORAGE         SECTION.
 
+       77 WRK-SELECTED         PIC X(1).
        01  WRK-AREA.
            05 WRK-MENU-TITLE       PIC X(30).
            05 WRK-MENU-ITEM        PIC X(30) OCCURS 7 TIMES.
            05 WRK-MENU-SIZE        PIC 9(1).
-           05 WRK-SELECTED         PIC X(1).
 
        PROCEDURE DIVISION.
-       MAIN-PROCEDURE.
+       0000-MAIN-PROCEDURE.
            PERFORM 0010-DRAW-MM.
+           EVALUATE WRK-SELECTED
+               WHEN 1
+                   CALL "CADASTRAR"
+               WHEN OTHER
+                   PERFORM 0000-MAIN-PROCEDURE
+           END-EVALUATE.
            STOP RUN.
 
       *=================================================================
@@ -36,4 +42,6 @@
            MOVE 6 TO WRK-MENU-SIZE.
 
            CALL "MENUS" USING WRK-AREA.
+           DISPLAY "SELECIONE UMA OPCAO: " AT 1205.
+           ACCEPT WRK-SELECTED AT 1226.
        END PROGRAM MAIN.
