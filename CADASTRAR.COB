@@ -1,8 +1,9 @@
       *=================================================================
       * Autor: RAUL T. BERTO
       * Data: 24/MAR/2025
-      * Objetivo: Cadastrar filmes
+      * Objetivo: Obter informacoes de filmes para gravacao
       *=================================================================
+
        IDENTIFICATION DIVISION.
        PROGRAM-ID. CADASTRAR.
        DATA DIVISION.
@@ -13,10 +14,7 @@
        77  WRK-MOV-GRADE-MSK       PIC X(02) JUSTIFIED RIGHT.
        77  WRK-MOV-LEN-MSK         PIC X(03) JUSTIFIED RIGHT.
        77  WRK-CONFIRM             PIC X(01).
-
-       01  WRK-ERROR.
-           05 WRK-MSG              PIC X(40) VALUE SPACES.
-           05 WRK-STATUS           PIC 9(03) VALUE ZEROES.
+       77  WRK-STATUS              PIC 9(03) VALUE ZEROES.
 
        01  WRK-AREA.
            05 WRK-MENU-TITLE       PIC X(30).
@@ -58,7 +56,6 @@
       *=================================================================
        0010-ZERO-INFO      SECTION.
       *=================================================================
-           MOVE SPACES TO WRK-MSG.
            MOVE ZEROES TO WRK-STATUS.
 
            MOVE SPACES TO WRK-MOV-COD-MSK.
@@ -100,18 +97,22 @@
       *=================================================================
        0040-VALIDATE-INFO      SECTION.
       *=================================================================
-
            IF WRK-MOV-COD EQUAL ZEROES
-               MOVE "CODIGO INSERIDO E INVALIDO (0001->9999)" TO WRK-MSG
+               MOVE 601 TO WRK-STATUS
            ELSE IF WRK-MOV-LEN EQUAL ZEROES
-               MOVE "DURACAO INSERIDA E INVALIDA (000->999)" TO WRK-MSG
+               MOVE 602 TO WRK-STATUS
            ELSE IF WRK-MOV-GRADE EQUAL ZEROES
-               MOVE "NOTA INSERIDA E INVALIDA (00->99)" TO WRK-MSG
-           END-IF.
+               MOVE 603 TO WRK-STATUS
+           ELSE IF WRK-MOV-TITLE EQUAL SPACES
+               MOVE 604 TO WRK-STATUS
+           ELSE IF WRK-MOV-GENRE EQUAL SPACES
+               MOVE 605 TO WRK-STATUS
+           ELSE IF WRK-MOV-PUBLI EQUAL SPACES
+               MOVE 606 TO WRK-STATUS
 
-           IF WRK-MSG NOT EQUAL SPACES
-               MOVE 600 TO WRK-STATUS
-               CALL "ERROS" USING WRK-ERROR
+           END-IF.
+           IF WRK-STATUS NOT EQUAL ZEROES
+               CALL "ERROS" USING WRK-STATUS
                PERFORM 0000-MAIN-PROCEDURE
            END-IF.
 
@@ -121,26 +122,32 @@
            DISPLAY CLEAR-SCREEN.
            DISPLAY CONFIRM-SCREEN.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 04 TO WRK-LINE.
            STRING "CODIGO: " WRK-MOV-COD INTO WRK-BUFF.
            DISPLAY DTA.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 05 TO WRK-LINE.
            STRING "TITULO: " WRK-MOV-TITLE INTO WRK-BUFF.
            DISPLAY DTA.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 06 TO WRK-LINE.
            STRING "GENERO: " WRK-MOV-GENRE INTO WRK-BUFF.
            DISPLAY DTA.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 07 TO WRK-LINE.
            STRING "DURACAO: " WRK-MOV-LEN INTO WRK-BUFF.
            DISPLAY DTA.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 08 TO WRK-LINE.
            STRING "DISTRIBUIDORA: " WRK-MOV-PUBLI INTO WRK-BUFF.
            DISPLAY DTA.
 
+           MOVE SPACES TO WRK-BUFF.
            MOVE 09 TO WRK-LINE.
            STRING "NOTA: " WRK-MOV-GRADE INTO WRK-BUFF.
            DISPLAY DTA.
@@ -156,5 +163,5 @@
       *=================================================================
        0060-WRITE-MOVIE      SECTION.
       *=================================================================
-               CALL "WRITEFILE" USING WRK-MOVIE.
+               CALL "WRITEMOVIE" USING WRK-MOVIE.
        END PROGRAM CADASTRAR.

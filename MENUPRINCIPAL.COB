@@ -5,7 +5,7 @@
       *=================================================================
 
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. FILMES.
+       PROGRAM-ID. MENUPRINCIPAL.
        DATA DIVISION.
        FILE                    SECTION.
        WORKING-STORAGE         SECTION.
@@ -15,17 +15,17 @@
            05 WRK-MENU-TITLE       PIC X(30).
            05 WRK-MENU-ITEM        PIC X(30) OCCURS 7 TIMES.
            05 WRK-MENU-SIZE        PIC 9(1).
-       PROCEDURE DIVISION.
+       LINKAGE SECTION.
+       77  LNK-BUFF            PIC X(1).
+       PROCEDURE DIVISION USING LNK-BUFF.
        0000-MAIN-PROCEDURE.
            PERFORM 0010-DRAW-MM.
            EVALUATE WRK-SELECTED
                WHEN 1
                    CALL "CADASTRAR"
                WHEN OTHER
-                   CONTINUE
+                   PERFORM 0000-MAIN-PROCEDURE
            END-EVALUATE.
-           IF WRK-SELECTED NOT EQUAL TO 'X'
-               PERFORM 0000-MAIN-PROCEDURE.
            STOP RUN.
 
       *=================================================================
@@ -44,4 +44,4 @@
            DISPLAY "SELECIONE UMA OPCAO: " AT 1205.
            ACCEPT WRK-SELECTED AT 1226.
 
-       END PROGRAM FILMES.
+       END PROGRAM MENUPRINCIPAL.
