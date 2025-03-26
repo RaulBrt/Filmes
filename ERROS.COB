@@ -34,8 +34,11 @@
                    WHEN 220
                        MOVE "CODIGO DUPLICADO - FILME NAO CADASTRADO"
                        TO WRK-MSG
-                   WHEN 480
+                   WHEN 350
                        MOVE "ARQUIVO DE REGISTRO NAO ENCONTRADO"
+                       TO WRK-MSG
+                   WHEN 480
+                       MOVE "ARQUIVO DE REGISTRO NAO PODE SER CRIADO"
                        TO WRK-MSG
                    WHEN 601
                        STRING "CODIGO INSERIDO E INVALIDO (0001->9999)"
@@ -61,6 +64,9 @@
                        STRING "DISTRIBUIDORA NAO PODE SER VAZIO"
                        " - FILME NAO CADASTRADO"
                        INTO WRK-MSG
+                   WHEN 607
+                       MOVE "FILME NAO CADASTRADO"
+                       TO WRK-MSG
                    WHEN OTHER
                        MOVE LNK-STATUS TO WRK-MSG
                END-EVALUATE

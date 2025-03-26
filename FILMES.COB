@@ -1,7 +1,9 @@
       *=================================================================
       * Autor: RAUL T. BERTO
       * Data: 24/MAR/2025
-      * Objetivo: Menu principal da aplicação
+      * Objetivo: Este programa tem a finalidade de gerenciar os
+      *           dados de um catálogo de filmes através de um menu de opções :
+      *           Cadastro, Consulta, Alteração, Exclusão e Relação
       *=================================================================
 
        IDENTIFICATION DIVISION.
@@ -21,6 +23,8 @@
            EVALUATE WRK-SELECTED
                WHEN 1
                    CALL "CADASTRAR"
+               WHEN 2
+                   CALL "CONSULTAR"
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
