@@ -6,24 +6,7 @@
 
        IDENTIFICATION DIVISION.
        PROGRAM-ID. CONSULTAR.
-       ENVIRONMENT     DIVISION.
-       INPUT-OUTPUT    SECTION.
-       FILE-CONTROL.
-           SELECT MOVIES ASSIGN TO "MOVIES.DAT"
-           FILE STATUS IS WRK-STATUS
-           ORGANISATION IS INDEXED
-           ACCESS MODE IS RANDOM
-           RECORD KEY IS FS-MOV-COD.
        DATA DIVISION.
-       FILE SECTION.
-           FD  MOVIES.
-           01 FS-MOVIE.
-               05 FS-MOV-COD          PIC 9(05) VALUE ZEROES.
-               05 FS-MOV-TITLE        PIC X(30) VALUE SPACES.
-               05 FS-MOV-GENRE        PIC X(08) VALUE SPACES.
-               05 FS-MOV-LEN          PIC 9(03) VALUE ZEROES.
-               05 FS-MOV-PUBLI        PIC X(15) VALUE SPACES.
-               05 FS-MOV-GRADE        PIC 9(02) VALUE ZEROES.
        WORKING-STORAGE SECTION.
        77  WRK-BUFF                PIC X(30).
        77  WRK-LINE                PIC 9(01).
@@ -103,24 +86,12 @@
            IF WRK-MOV-COD-MSK EQUAL SPACES
                GOBACK
            END-IF.
-           MOVE WRK-MOV-COD-MSK TO FS-MOV-COD.
-
 
       *=================================================================
        0040-SEARCH-MOVIE      SECTION.
       *=================================================================
-           OPEN INPUT MOVIES.
-           IF WRK-STATUS NOT EQUAL TO ZEROES
-               CALL "ERROS" USING WRK-STATUS
-           END-IF.
-           READ MOVIES
-               INVALID KEY
-                   MOVE 607 TO WRK-STATUS
-                   CALL "ERROS" USING WRK-STATUS
-               NOT INVALID KEY
-                   MOVE FS-MOVIE TO WRK-MOVIE
-           END-READ.
-           CLOSE MOVIES.
+           MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD.
+           CALL "SEARCHMOVIE" USING WRK-MOVIE,WRK-STATUS.
 
       *=================================================================
        0050-SHOW-MOVIE      SECTION.
@@ -160,4 +131,5 @@
            DISPLAY DTA.
 
            ACCEPT WRK-TECLA.
+
        END PROGRAM CONSULTAR.
