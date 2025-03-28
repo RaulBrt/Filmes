@@ -1,20 +1,19 @@
       *=================================================================
       * Autor: RAUL T. BERTO
-      * Data: 24/MAR/2025
-      * Objetivo: Obter informacoes de filmes para gravacao
+      * Data: 27/MAR/2025
+      * Objetivo: Excluir informacoes de filmes cadastrados
       *=================================================================
 
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. CADASTRAR.
+       PROGRAM-ID. EXCLUIR.
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        77  WRK-BUFF                PIC X(30).
-       77  WRK-LINE                PIC 9(01).
-       77  WRK-TRIES               PIC 9(01) VALUE ZEROES.
+       77  WRK-LINE                PIC 9(02).
        77  WRK-MOV-COD-MSK         PIC X(04) JUSTIFIED RIGHT.
        77  WRK-MOV-GRADE-MSK       PIC X(02) JUSTIFIED RIGHT.
        77  WRK-MOV-LEN-MSK         PIC X(03) JUSTIFIED RIGHT.
-       77  WRK-CONFIRM             PIC X(01).
+       77  WRK-TECLA               PIC X(01).
        77  WRK-STATUS              PIC 9(03) VALUE ZEROES.
 
        01  WRK-AREA.
@@ -32,22 +31,27 @@
 
        LINKAGE SECTION.
        77  LNK-BUFF PIC X(1) VALUE SPACES.
+
        SCREEN  SECTION.
        01  CLEAR.
            05 CLEAR-SCREEN.
                10 BLANK SCREEN.
                10 LINE 01 COLUMN 01 ERASE EOL.
-       01  CONFIRM.
-           05 CONFIRM-SCREEN.
+       01  SHOW-MV.
+           05 SHOW-SCREEN.
                10 LINE 03 COLUMN 01 PIC X(30) ERASE EOL
-                  BACKGROUND-COLOR 2 FROM "FILME".
+                  BACKGROUND-COLOR 4 FROM "FILME".
            05 DTA.
                10 LINE WRK-LINE COLUMN 05 PIC X(30) ERASE EOL
-                  BACKGROUND-COLOR 0 FOREGROUND-COLOR 2 FROM WRK-BUFF.
+                  BACKGROUND-COLOR 0 FOREGROUND-COLOR 4 FROM WRK-BUFF.
+           05 CONFIRM.
+               10 LINE WRK-LINE COLUMN 01 PIC X(31) ERASE EOL
+                  BACKGROUND-COLOR 4 FROM
+                  "DESEJA EXCLUIR ESTE FILME(S/N)?".
        01  UNCONFIRM.
            05 UNCONFIRM-SCREEN.
                10 LINE 03 COLUMN 05 PIC X(20) ERASE EOL
-               BACKGROUND-COLOR 4 FROM "FILME NAO CADASTRADO".
+               BACKGROUND-COLOR 4 FROM "FILME NAO EXCLUIDO".
                10 LINE 04 COLUMN 05 PIC X(27) ERASE EOL
                FOREGROUND-COLOR 7 FROM "PRESSIONE ENTER PARA VOLTAR".
 
@@ -56,9 +60,12 @@
            PERFORM 0010-ZERO-INFO.
            PERFORM 0020-DRAW-MENU.
            PERFORM 0030-GET-INFO.
-           PERFORM 0040-VALIDATE-INFO.
+           PERFORM 0040-SEARCH-MOVIE.
            IF WRK-STATUS EQUAL ZEROES
-               PERFORM 0050-CONFIRM-CREATE.
+               PERFORM 0050-CONFIRM-EXCLUSION
+           IF WRK-STATUS NOT EQUAL ZEROES
+               CALL "ERROS" USING WRK-STATUS
+           END-IF.
            GOBACK.
 
       *=================================================================
@@ -79,62 +86,35 @@
       *=================================================================
        0020-DRAW-MENU      SECTION.
       *=================================================================
-           MOVE "CADASTRO" TO WRK-MENU-TITLE.
+           MOVE "EXCLUSAO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
-           MOVE "TITULO: " TO WRK-MENU-ITEM(02).
-           MOVE "GENERO: " TO WRK-MENU-ITEM(03).
-           MOVE "DURACAO: " TO WRK-MENU-ITEM(04).
-           MOVE "DISTRIBUIDORA: " TO WRK-MENU-ITEM(05).
-           MOVE "NOTA: " TO WRK-MENU-ITEM(06).
-           MOVE 6 TO WRK-MENU-SIZE.
+           MOVE 1 TO WRK-MENU-SIZE.
            CALL "MENUS" USING WRK-AREA.
            DISPLAY "PRESSIONE ENTER PARA VOLTAR" AT 1005.
+
       *=================================================================
        0030-GET-INFO      SECTION.
       *=================================================================
-           ACCEPT WRK-MOV-COD-MSK      AT 0320.
+           ACCEPT WRK-MOV-COD-MSK AT 0320.
            IF WRK-MOV-COD-MSK EQUAL SPACES
                GOBACK
            END-IF.
-           ACCEPT WRK-MOV-TITLE        AT 0420.
-           ACCEPT WRK-MOV-GENRE        AT 0520.
-           ACCEPT WRK-MOV-LEN-MSK      AT 0620.
-           ACCEPT WRK-MOV-PUBLI        AT 0720.
-           ACCEPT WRK-MOV-GRADE-MSK    AT 0820.
 
+      *=================================================================
+       0040-SEARCH-MOVIE      SECTION.
+      *=================================================================
            MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD.
-           MOVE WRK-MOV-LEN-MSK TO WRK-MOV-LEN.
-           MOVE WRK-MOV-GRADE-MSK TO WRK-MOV-GRADE.
+           CALL "SEARCHMOVIE" USING WRK-MOVIE,WRK-STATUS.
 
       *=================================================================
-       0040-VALIDATE-INFO      SECTION.
-      *=================================================================
-           IF WRK-MOV-COD EQUAL ZEROES
-               GOBACK
-           ELSE IF WRK-MOV-LEN EQUAL ZEROES
-               MOVE 602 TO WRK-STATUS
-           ELSE IF WRK-MOV-GRADE EQUAL ZEROES
-               MOVE 603 TO WRK-STATUS
-           ELSE IF WRK-MOV-TITLE EQUAL SPACES
-               MOVE 604 TO WRK-STATUS
-           ELSE IF WRK-MOV-GENRE EQUAL SPACES
-               MOVE 605 TO WRK-STATUS
-           ELSE IF WRK-MOV-PUBLI EQUAL SPACES
-               MOVE 606 TO WRK-STATUS
-
-           END-IF.
-           IF WRK-STATUS NOT EQUAL ZEROES
-               CALL "ERROS" USING WRK-STATUS
-           END-IF.
-
-      *=================================================================
-       0050-CONFIRM-CREATE      SECTION.
+       0050-CONFIRM-EXCLUSION      SECTION.
       *=================================================================
            DISPLAY CLEAR-SCREEN.
-           DISPLAY CONFIRM-SCREEN.
+           DISPLAY SHOW-SCREEN.
 
            MOVE SPACES TO WRK-BUFF.
            MOVE 04 TO WRK-LINE.
+
            STRING "CODIGO: " WRK-MOV-COD INTO WRK-BUFF.
            DISPLAY DTA.
 
@@ -163,23 +143,18 @@
            STRING "NOTA: " WRK-MOV-GRADE INTO WRK-BUFF.
            DISPLAY DTA.
 
-           DISPLAY "CONFIMA O CADASTRO DO FILME (S/N)? " AT 1101.
-           ACCEPT WRK-CONFIRM AT 1136.
+           MOVE 10 TO WRK-LINE.
+           DISPLAY CONFIRM.
 
-           IF WRK-CONFIRM EQUAL 'S'
-               PERFORM 0060-WRITE-FILE
+           MOVE SPACES TO WRK-TECLA.
+           ACCEPT WRK-TECLA AT 1038.
+
+           IF WRK-TECLA EQUAL 'S'
+               CALL "DELETEMOVIE" USING WRK-MOVIE,WRK-STATUS
            ELSE
                DISPLAY CLEAR-SCREEN
-               DISPLAY UNCONFIRM-SCREEN
-               ACCEPT WRK-BUFF
+               DISPLAY UNCONFIRM
+               ACCEPT WRK-TECLA
            END-IF.
 
-      *=================================================================
-       0060-WRITE-FILE      SECTION.
-      *=================================================================
-           CALL "WRITEMOVIE" USING WRK-MOVIE, WRK-STATUS.
-           DISPLAY CLEAR-SCREEN.
-           DISPLAY "FILME CADASTRADO." AT 0510.
-           DISPLAY "PRESSIONE ENTER PARA CONTINUAR" AT 0610
-           ACCEPT WRK-CONFIRM.
-       END PROGRAM CADASTRAR.
+       END PROGRAM EXCLUIR.

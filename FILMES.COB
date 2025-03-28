@@ -25,6 +25,10 @@
                    CALL "CADASTRAR"
                WHEN 2
                    CALL "CONSULTAR"
+               WHEN 3
+                   CALL "ALTERAR"
+               WHEN 4
+                   CALL "EXCLUIR"
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.

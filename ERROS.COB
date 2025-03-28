@@ -29,52 +29,52 @@
        MAIN-PROCEDURE.
            MOVE SPACES TO WRK-MSG.
            MOVE SPACES TO WRK-BUFF
-           IF LNK-STATUS LESS THAN 800
-               EVALUATE LNK-STATUS
-                   WHEN 220
-                       MOVE "CODIGO DUPLICADO - FILME NAO CADASTRADO"
-                       TO WRK-MSG
-                   WHEN 350
-                       MOVE "ARQUIVO DE REGISTRO NAO ENCONTRADO"
-                       TO WRK-MSG
-                   WHEN 480
-                       MOVE "ARQUIVO DE REGISTRO NAO PODE SER CRIADO"
-                       TO WRK-MSG
-                   WHEN 601
-                       STRING "CODIGO INSERIDO E INVALIDO (0001->9999)"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 602
-                       STRING "DURACAO INSERIDA E INVALIDA (000->999)"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 603
-                       STRING "NOTA INSERIDA E INVALIDA (00->99)"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 604
-                       STRING "TITULO NAO PODE SER VAZIO"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 605
-                       STRING "GENERO NAO PODE SER VAZIO"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 606
-                       STRING "DISTRIBUIDORA NAO PODE SER VAZIO"
-                       " - FILME NAO CADASTRADO"
-                       INTO WRK-MSG
-                   WHEN 607
-                       MOVE "FILME NAO CADASTRADO"
-                       TO WRK-MSG
-                   WHEN OTHER
-                       MOVE LNK-STATUS TO WRK-MSG
-               END-EVALUATE
-               PERFORM 0010-DRAW-ERR-SCRN
-           ELSE
-               CONTINUE
-           END-IF.
-                   GOBACK.
+           EVALUATE LNK-STATUS
+               WHEN 220
+                   MOVE "CODIGO DUPLICADO - FILME NAO CADASTRADO"
+                   TO WRK-MSG
+               WHEN 350
+                   MOVE "ARQUIVO DE REGISTRO NAO ENCONTRADO"
+                   TO WRK-MSG
+               WHEN 420
+                   GOBACK
+               WHEN 480
+                   STRING "ARQUIVO DE REGISTRO NAO PODE SER CRIADO "
+                   "OU ACESSADO" INTO WRK-MSG
+               WHEN 601
+                   STRING "CODIGO INSERIDO E INVALIDO (0001->9999)"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 602
+                   STRING "DURACAO INSERIDA E INVALIDA (000->999)"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 603
+                   STRING "NOTA INSERIDA E INVALIDA (00->99)"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 604
+                   STRING "TITULO NAO PODE SER VAZIO"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 605
+                   STRING "GENERO NAO PODE SER VAZIO"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 606
+                   STRING "DISTRIBUIDORA NAO PODE SER VAZIO"
+                   " - FILME NAO CADASTRADO"
+                   INTO WRK-MSG
+               WHEN 607
+                   MOVE "FILME NAO ENCONTRADO"
+                   TO WRK-MSG
+               WHEN 608
+                   MOVE "REGISTRO NAO ALTERADO" TO WRK-MSG
+               WHEN OTHER
+                   MOVE LNK-STATUS TO WRK-MSG
+           END-EVALUATE
+           PERFORM 0010-DRAW-ERR-SCRN
+           GOBACK.
 
       *=================================================================
        0010-DRAW-ERR-SCRN       SECTION.
