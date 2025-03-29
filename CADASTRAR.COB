@@ -178,8 +178,4 @@
        0060-WRITE-FILE      SECTION.
       *=================================================================
            CALL "WRITEMOVIE" USING WRK-MOVIE, WRK-STATUS.
-           DISPLAY CLEAR-SCREEN.
-           DISPLAY "FILME CADASTRADO." AT 0510.
-           DISPLAY "PRESSIONE ENTER PARA CONTINUAR" AT 0610
-           ACCEPT WRK-CONFIRM.
        END PROGRAM CADASTRAR.

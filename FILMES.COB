@@ -17,6 +17,15 @@
            05 WRK-MENU-TITLE       PIC X(30).
            05 WRK-MENU-ITEM        PIC X(30) OCCURS 7 TIMES.
            05 WRK-MENU-SIZE        PIC 9(1).
+       SCREEN  SECTION.
+       01  CLEAR.
+           05 CLEAR-SCREEN.
+               10 BLANK SCREEN.
+               10 LINE 01 COLUMN 01 ERASE EOL.
+       01  SHOW-MV.
+           05 SHOW-SCREEN.
+               10 LINE 01 COLUMN 01 PIC X(30) ERASE EOL
+                  BACKGROUND-COLOR 2 FROM "FILMES".
        PROCEDURE DIVISION.
        0000-MAIN-PROCEDURE.
            PERFORM 0010-DRAW-MM.
@@ -29,6 +38,8 @@
                    CALL "ALTERAR"
                WHEN 4
                    CALL "EXCLUIR"
+               WHEN 5
+                   CALL "RELATORIO"
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
@@ -39,6 +50,7 @@
       *=================================================================
        0010-DRAW-MM            SECTION.
       *=================================================================
+           DISPLAY CLEAR-SCREEN
            MOVE "MENU PRINCIPAL" TO WRK-MENU-TITLE.
            MOVE "1-CADASTRO" TO WRK-MENU-ITEM(01).
            MOVE "2-CONSULTA" TO WRK-MENU-ITEM(02).
