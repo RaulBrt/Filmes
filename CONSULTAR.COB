@@ -58,6 +58,7 @@
 
       *=================================================================
        0010-ZERO-INFO      SECTION.
+      *Apaga todas as informacoes gravadas nas variaveis
       *=================================================================
            MOVE ZEROES TO WRK-STATUS.
 
@@ -73,6 +74,7 @@
            MOVE ZEROES TO WRK-MOV-GRADE.
       *=================================================================
        0020-DRAW-MENU      SECTION.
+      *Desenha o campo para receber o codigo do filme para consulta
       *=================================================================
            MOVE "CONSULTA" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
@@ -82,6 +84,7 @@
 
       *=================================================================
        0030-GET-INFO      SECTION.
+      *Recebe o codigo do filme e grava na variavel correta
       *=================================================================
            ACCEPT WRK-MOV-COD-MSK AT 0320.
            IF WRK-MOV-COD-MSK EQUAL SPACES
@@ -90,12 +93,14 @@
 
       *=================================================================
        0040-SEARCH-MOVIE      SECTION.
+      *Chama o modulo para a procura do filme no arquivo
       *=================================================================
            MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD.
            CALL "SEARCHMOVIE" USING WRK-MOVIE,WRK-STATUS.
 
       *=================================================================
        0050-SHOW-MOVIE      SECTION.
+      *Mostra informacao recebida do filme em uma tela
       *=================================================================
            DISPLAY CLEAR-SCREEN.
            DISPLAY SHOW-SCREEN.

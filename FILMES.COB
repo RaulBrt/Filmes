@@ -49,6 +49,7 @@
 
       *=================================================================
        0010-DRAW-MM            SECTION.
+      *Desenha o menu principal
       *=================================================================
            DISPLAY CLEAR-SCREEN
            MOVE "MENU PRINCIPAL" TO WRK-MENU-TITLE.

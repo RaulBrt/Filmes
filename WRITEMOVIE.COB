@@ -1,7 +1,7 @@
       *=================================================================
       * Autor: RAUL T. BERTO
       * Data: 24/MAR/2025
-      * Objetivo: Gravar informacoes de um filme
+      * Objetivo: Gravar informacoes de um filme no arquivo
       *=================================================================
        IDENTIFICATION DIVISION.
        PROGRAM-ID. WRITEMOVIE.

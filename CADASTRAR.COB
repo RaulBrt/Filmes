@@ -63,6 +63,7 @@
 
       *=================================================================
        0010-ZERO-INFO      SECTION.
+      *Apaga todas as informacoes gravadas nas variaveis
       *=================================================================
            MOVE ZEROES TO WRK-STATUS.
 
@@ -76,8 +77,10 @@
            MOVE ZEROES TO WRK-MOV-LEN.
            MOVE SPACES TO WRK-MOV-PUBLI.
            MOVE ZEROES TO WRK-MOV-GRADE.
+
       *=================================================================
        0020-DRAW-MENU      SECTION.
+      *Desenha os campos para receber as informacoes dos filmes
       *=================================================================
            MOVE "CADASTRO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
@@ -91,6 +94,7 @@
            DISPLAY "PRESSIONE ENTER PARA VOLTAR" AT 1005.
       *=================================================================
        0030-GET-INFO      SECTION.
+      *Recebe as informacoes e grava nas respectivas variaveis
       *=================================================================
            ACCEPT WRK-MOV-COD-MSK      AT 0320.
            IF WRK-MOV-COD-MSK EQUAL SPACES
@@ -108,6 +112,8 @@
 
       *=================================================================
        0040-VALIDATE-INFO      SECTION.
+      *Valida as informacoes recebidas e
+      *mostra um erro se tiver problemas
       *=================================================================
            IF WRK-MOV-COD EQUAL ZEROES
                GOBACK
@@ -129,6 +135,7 @@
 
       *=================================================================
        0050-CONFIRM-CREATE      SECTION.
+      *Desenha uma tela pedindo a confirmacao dos dados para a gravacao
       *=================================================================
            DISPLAY CLEAR-SCREEN.
            DISPLAY CONFIRM-SCREEN.
@@ -176,6 +183,7 @@
 
       *=================================================================
        0060-WRITE-FILE      SECTION.
+      *Chama o modulo para a gravacao do filme
       *=================================================================
            CALL "WRITEMOVIE" USING WRK-MOVIE, WRK-STATUS.
        END PROGRAM CADASTRAR.

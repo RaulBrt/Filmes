@@ -1,7 +1,8 @@
       *=================================================================
       * Autor: RAUL T. BERTO
       * Data: 24/MAR/2025
-      * Objetivo: Lidar com erros
+      * Objetivo: Recebe um codigo e mostra uma
+      * tela mostrando o que esta errado
       *=================================================================
        IDENTIFICATION DIVISION.
        PROGRAM-ID. ERROS.
@@ -78,6 +79,7 @@
 
       *=================================================================
        0010-DRAW-ERR-SCRN       SECTION.
+      *Desenha a tela de erros
       *=================================================================
            STRING "ERRO: " WRK-MSG INTO WRK-BUFF.
            DISPLAY CLEAR.

@@ -59,6 +59,7 @@
            GOBACK.
       *=================================================================
        0010-INIT  SECTION.
+      *Desenha o cabecalho do relatorio
       *=================================================================
                STRING "COD  TITULO                        GENERO  "
                "DUR DISTRIBUIDORA NOTA"
@@ -68,6 +69,7 @@
                DISPLAY HEADER-SCREEN.
       *=================================================================
        0020-READ-FILE  SECTION.
+      *Le o arquivo linha por linha e mostra na tela
       *=================================================================
            PERFORM UNTIL WRK-STATUS NOT EQUAL 0
                    READ MOVIES

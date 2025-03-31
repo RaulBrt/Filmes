@@ -71,6 +71,7 @@
 
       *=================================================================
        0010-ZERO-INFO      SECTION.
+      *Apaga todas as informacoes gravadas nas variaveis
       *=================================================================
            MOVE ZEROES TO WRK-STATUS.
 
@@ -93,6 +94,7 @@
            MOVE ZEROES TO WRK-MOV-GRADE(02).
       *=================================================================
        0020-DRAW-MENU      SECTION.
+      *Desenha o campo para receber o codigo do filme para consulta
       *=================================================================
            MOVE "ALTERACAO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
@@ -102,6 +104,7 @@
 
       *=================================================================
        0030-GET-SEARCH-INFO      SECTION.
+      *Recebe o codigo do filme e grava na variavel correta
       *=================================================================
            ACCEPT WRK-MOV-COD-MSK AT 0320.
            IF WRK-MOV-COD-MSK EQUAL SPACES
@@ -110,6 +113,7 @@
 
       *=================================================================
        0040-SEARCH-MOVIE      SECTION.
+      *Chama o modulo para a procura do filme no arquivo
       *=================================================================
            MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD(01).
            CALL "SEARCHMOVIE" USING WRK-MOVIE(01),WRK-STATUS.
@@ -121,6 +125,8 @@
 
       *=================================================================
        0050-GET-ALTER-INFO   SECTION.
+      *Desenha o menu para receber as novas informacoes
+      *e grava nas respectivas variaveis
       *=================================================================
            MOVE "ALTERACAO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
@@ -145,6 +151,7 @@
 
       *=================================================================
        0060-CHECK-ALTER-INFO   SECTION.
+      *Verifica as informacoes recebidas e quais devem ser alteradas
       *=================================================================
            IF WRK-MOV-LEN-MSK NOT EQUAL SPACES AND
            WRK-MOV-LEN(02) EQUAL ZEROES
@@ -187,6 +194,7 @@
 
       *=================================================================
        0070-CONFIRM-ALTER-INFO   SECTION.
+      *Desenha uma tela pedindo a confirmacao dos dados para a alteracao
       *=================================================================
            MOVE WRK-MOV-COD(01) TO WRK-MOV-COD(02).
            DISPLAY CLEAR-SCREEN.
@@ -244,8 +252,7 @@
            ACCEPT WRK-TECLA AT 1236.
 
            IF WRK-TECLA EQUAL 'S'
-               MOVE 0 TO WRK-STATUS
-               CALL "ALTERMOVIE" USING WRK-MOVIE(02),WRK-STATUS
+               PERFORM 0080-ALTER-MOVIE
                DISPLAY CLEAR-SCREEN
                DISPLAY "REGISTRO ALTERADO" AT 0510
                DISPLAY "PRESSIONE ENTER PARA CONTINUAR" AT 0610
@@ -254,4 +261,10 @@
                DISPLAY UNCONFIRM-SCREEN
            END-IF.
            ACCEPT WRK-TECLA.
+      *========================================================================
+       0080-ALTER-MOVIE SECTION.
+      *Chama o modulo para a alteracao das informacoes
+      *========================================================================
+           MOVE 0 TO WRK-STATUS
+           CALL "ALTERMOVIE" USING WRK-MOVIE(02),WRK-STATUS.
        END PROGRAM ALTERAR.

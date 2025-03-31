@@ -70,6 +70,7 @@
 
       *=================================================================
        0010-ZERO-INFO      SECTION.
+      *Apaga todas as informacoes gravadas nas variaveis
       *=================================================================
            MOVE ZEROES TO WRK-STATUS.
 
@@ -85,6 +86,7 @@
            MOVE ZEROES TO WRK-MOV-GRADE.
       *=================================================================
        0020-DRAW-MENU      SECTION.
+      *Desenha o campo para receber o codigo do filme para consulta
       *=================================================================
            MOVE "EXCLUSAO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
@@ -94,6 +96,7 @@
 
       *=================================================================
        0030-GET-INFO      SECTION.
+      *Recebe o codigo do filme e grava na variavel correta
       *=================================================================
            ACCEPT WRK-MOV-COD-MSK AT 0320.
            IF WRK-MOV-COD-MSK EQUAL SPACES
@@ -102,12 +105,14 @@
 
       *=================================================================
        0040-SEARCH-MOVIE      SECTION.
+      *Chama o modulo para a consulta do filme
       *=================================================================
            MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD.
            CALL "SEARCHMOVIE" USING WRK-MOVIE,WRK-STATUS.
 
       *=================================================================
        0050-CONFIRM-EXCLUSION      SECTION.
+      *Desenha a tela pedindo confirmacao da exclusao do filme
       *=================================================================
            DISPLAY CLEAR-SCREEN.
            DISPLAY SHOW-SCREEN.
@@ -150,11 +155,15 @@
            ACCEPT WRK-TECLA AT 1038.
 
            IF WRK-TECLA EQUAL 'S'
-               CALL "DELETEMOVIE" USING WRK-MOVIE,WRK-STATUS
+               PERFORM 0060-DELETE-MOVIE
            ELSE
                DISPLAY CLEAR-SCREEN
                DISPLAY UNCONFIRM
                ACCEPT WRK-TECLA
            END-IF.
-
+      *========================================================================
+       0060-DELETE-MOVIE SECTION.
+      *Chama o modulo para a exclusao do filme
+      *========================================================================
+           CALL "DELETEMOVIE" USING WRK-MOVIE,WRK-STATUS.
        END PROGRAM EXCLUIR.
