@@ -11,8 +11,6 @@
        77  WRK-BUFF                PIC X(30).
        77  WRK-LINE                PIC 9(01).
        77  WRK-MOV-COD-MSK         PIC X(04) JUSTIFIED RIGHT.
-       77  WRK-MOV-GRADE-MSK       PIC X(02) JUSTIFIED RIGHT.
-       77  WRK-MOV-LEN-MSK         PIC X(03) JUSTIFIED RIGHT.
        77  WRK-TECLA               PIC X(01).
        77  WRK-STATUS              PIC 9(03) VALUE ZEROES.
 
@@ -63,8 +61,6 @@
            MOVE ZEROES TO WRK-STATUS.
 
            MOVE SPACES TO WRK-MOV-COD-MSK.
-           MOVE SPACES TO WRK-MOV-LEN-MSK.
-           MOVE SPACES TO WRK-MOV-GRADE-MSK.
 
            MOVE ZEROES TO WRK-MOV-COD.
            MOVE SPACES TO WRK-MOV-TITLE.
