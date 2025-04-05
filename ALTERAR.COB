@@ -128,14 +128,14 @@
       *Desenha o menu para receber as novas informacoes
       *e grava nas respectivas variaveis
       *=================================================================
-           MOVE "ALTERACAO" TO WRK-MENU-TITLE.
-           MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
-           MOVE "TITULO: " TO WRK-MENU-ITEM(02).
-           MOVE "GENERO: " TO WRK-MENU-ITEM(03).
-           MOVE "DURACAO: " TO WRK-MENU-ITEM(04).
-           MOVE "DISTRIBUIDORA: " TO WRK-MENU-ITEM(05).
-           MOVE "NOTA: " TO WRK-MENU-ITEM(06).
-           MOVE 6 TO WRK-MENU-SIZE.
+           MOVE "ALTERACAO"                TO WRK-MENU-TITLE.
+           MOVE "CODIGO: "                 TO WRK-MENU-ITEM(01).
+           MOVE "TITULO: "                 TO WRK-MENU-ITEM(02).
+           MOVE "GENERO: "                 TO WRK-MENU-ITEM(03).
+           MOVE "DURACAO: "                TO WRK-MENU-ITEM(04).
+           MOVE "DISTRIBUIDORA: "          TO WRK-MENU-ITEM(05).
+           MOVE "NOTA: "                   TO WRK-MENU-ITEM(06).
+           MOVE 6                          TO WRK-MENU-SIZE.
            CALL "MENUS" USING WRK-AREA.
            DISPLAY "PRESSIONE ENTER PARA VOLTAR" AT 1005.
 
@@ -146,8 +146,8 @@
            ACCEPT WRK-MOV-PUBLI(02)        AT 0720.
            ACCEPT WRK-MOV-GRADE-MSK        AT 0820.
 
-           MOVE WRK-MOV-LEN-MSK TO WRK-MOV-LEN(02).
-           MOVE WRK-MOV-GRADE-MSK TO WRK-MOV-GRADE(02).
+           MOVE WRK-MOV-LEN-MSK            TO WRK-MOV-LEN(02).
+           MOVE WRK-MOV-GRADE-MSK          TO WRK-MOV-GRADE(02).
 
       *=================================================================
        0060-CHECK-ALTER-INFO   SECTION.

@@ -24,17 +24,17 @@
                05 FS-MOV-PUBLI        PIC X(15) VALUE SPACES.
                05 FS-MOV-GRADE        PIC 9(02) VALUE ZEROES.
        WORKING-STORAGE SECTION.
-       77  WRK-TRIES               PIC 9(01) VALUE ZEROES.
-       77  WRK-BUFF                PIC X(01) VALUE SPACES.
+       77  WRK-TRIES                  PIC 9(01) VALUE ZEROES.
+       77  WRK-BUFF                   PIC X(01) VALUE SPACES.
        LINKAGE SECTION.
-       01  LNK-STATUS              PIC 9(03).
+       01  LNK-STATUS                 PIC 9(03).
        01  LNK-MOVIE.
-           05 LNK-MOV-COD          PIC 9(05).
-           05 LNK-MOV-TITLE        PIC X(30).
-           05 LNK-MOV-GENRE        PIC X(08).
-           05 LNK-MOV-LEN          PIC 9(03).
-           05 LNK-MOV-PUBLI        PIC X(15).
-           05 LNK-MOV-GRADE        PIC 9(02).
+           05 LNK-MOV-COD             PIC 9(05).
+           05 LNK-MOV-TITLE           PIC X(30).
+           05 LNK-MOV-GENRE           PIC X(08).
+           05 LNK-MOV-LEN             PIC 9(03).
+           05 LNK-MOV-PUBLI           PIC X(15).
+           05 LNK-MOV-GRADE           PIC 9(02).
        SCREEN  SECTION.
        01  CLEAR.
            05 CLEAR-SCREEN.
@@ -53,15 +53,13 @@
        0000-MAIN-PROCEDURE.
            MOVE ZEROES TO LNK-STATUS.
            OPEN I-O MOVIES.
-           IF LNK-STATUS EQUAL 480 AND WRK-TRIES LESS THAN 1
+           IF LNK-STATUS EQUAL 350 AND WRK-TRIES LESS THAN 1
                ADD 1 TO WRK-TRIES
                CLOSE MOVIES
                OPEN OUTPUT MOVIES
                CLOSE MOVIES
                PERFORM 0000-MAIN-PROCEDURE
            ELSE IF WRK-TRIES GREATER THAN 0 AND LNK-STATUS NOT EQUAL 0
-               CALL "ERROS" USING LNK-STATUS
-           ELSE IF LNK-STATUS NOT EQUAL 0 AND LNK-STATUS NOT EQUAL 480
                CALL "ERROS" USING LNK-STATUS
            ELSE
                MOVE LNK-MOVIE TO FS-MOVIE

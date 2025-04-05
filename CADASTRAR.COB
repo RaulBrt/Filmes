@@ -82,14 +82,14 @@
        0020-DRAW-MENU      SECTION.
       *Desenha os campos para receber as informacoes dos filmes
       *=================================================================
-           MOVE "CADASTRO" TO WRK-MENU-TITLE.
-           MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
-           MOVE "TITULO: " TO WRK-MENU-ITEM(02).
-           MOVE "GENERO: " TO WRK-MENU-ITEM(03).
-           MOVE "DURACAO: " TO WRK-MENU-ITEM(04).
-           MOVE "DISTRIBUIDORA: " TO WRK-MENU-ITEM(05).
-           MOVE "NOTA: " TO WRK-MENU-ITEM(06).
-           MOVE 6 TO WRK-MENU-SIZE.
+           MOVE "CADASTRO"         TO WRK-MENU-TITLE.
+           MOVE "CODIGO: "         TO WRK-MENU-ITEM(01).
+           MOVE "TITULO: "         TO WRK-MENU-ITEM(02).
+           MOVE "GENERO: "         TO WRK-MENU-ITEM(03).
+           MOVE "DURACAO: "        TO WRK-MENU-ITEM(04).
+           MOVE "DISTRIBUIDORA: "  TO WRK-MENU-ITEM(05).
+           MOVE "NOTA: "           TO WRK-MENU-ITEM(06).
+           MOVE 6                  TO WRK-MENU-SIZE.
            CALL "MENUS" USING WRK-AREA.
            DISPLAY "PRESSIONE ENTER PARA VOLTAR" AT 1005.
       *=================================================================
@@ -106,17 +106,21 @@
            ACCEPT WRK-MOV-PUBLI        AT 0720.
            ACCEPT WRK-MOV-GRADE-MSK    AT 0820.
 
-           MOVE WRK-MOV-COD-MSK TO WRK-MOV-COD.
-           MOVE WRK-MOV-LEN-MSK TO WRK-MOV-LEN.
-           MOVE WRK-MOV-GRADE-MSK TO WRK-MOV-GRADE.
+           MOVE WRK-MOV-COD-MSK        TO WRK-MOV-COD.
+           MOVE WRK-MOV-LEN-MSK        TO WRK-MOV-LEN.
+           MOVE WRK-MOV-GRADE-MSK      TO WRK-MOV-GRADE.
 
       *=================================================================
        0040-VALIDATE-INFO      SECTION.
       *Valida as informacoes recebidas e
       *mostra um erro se tiver problemas
       *=================================================================
-           IF WRK-MOV-COD EQUAL ZEROES
+
+           IF WRK-MOV-COD EQUAL ZEROES AND WRK-MOV-COD-MSK EQUAL SPACES
                GOBACK
+           ELSE IF WRK-MOV-COD EQUAL ZEROES
+           AND WRK-MOV-COD-MSK EQUAL SPACES
+               MOVE 601 TO WRK-STATUS
            ELSE IF WRK-MOV-LEN EQUAL ZEROES
                MOVE 602 TO WRK-STATUS
            ELSE IF WRK-MOV-GRADE EQUAL ZEROES
@@ -127,8 +131,8 @@
                MOVE 605 TO WRK-STATUS
            ELSE IF WRK-MOV-PUBLI EQUAL SPACES
                MOVE 606 TO WRK-STATUS
-
            END-IF.
+
            IF WRK-STATUS NOT EQUAL ZEROES
                CALL "ERROS" USING WRK-STATUS
            END-IF.
@@ -173,12 +177,13 @@
            DISPLAY "CONFIMA O CADASTRO DO FILME (S/N)? " AT 1101.
            ACCEPT WRK-CONFIRM AT 1136.
 
-           IF WRK-CONFIRM EQUAL 'S'
+           IF WRK-CONFIRM EQUAL 'S' OR WRK-CONFIRM EQUAL TO 's'
                PERFORM 0060-WRITE-FILE
            ELSE
                DISPLAY CLEAR-SCREEN
                DISPLAY UNCONFIRM-SCREEN
-               ACCEPT WRK-BUFF
+               ACCEPT  WRK-BUFF
+               PERFORM 0000-MAIN-PROCEDURE
            END-IF.
 
       *=================================================================

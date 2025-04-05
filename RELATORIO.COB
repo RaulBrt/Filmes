@@ -17,20 +17,20 @@
        FILE SECTION.
            FD  MOVIES.
            01 FS-MOVIE.
-               05 FS-MOV-COD          PIC 9(05) VALUE ZEROES.
-               05 FS-MOV-TITLE        PIC X(30) VALUE SPACES.
-               05 FS-MOV-GENRE        PIC X(08) VALUE SPACES.
-               05 FS-MOV-LEN          PIC 9(03) VALUE ZEROES.
-               05 FS-MOV-PUBLI        PIC X(15) VALUE SPACES.
-               05 FS-MOV-GRADE        PIC 9(02) VALUE ZEROES.
+               05 FS-MOV-COD           PIC 9(05) VALUE ZEROES.
+               05 FS-MOV-TITLE         PIC X(30) VALUE SPACES.
+               05 FS-MOV-GENRE         PIC X(08) VALUE SPACES.
+               05 FS-MOV-LEN           PIC 9(03) VALUE ZEROES.
+               05 FS-MOV-PUBLI         PIC X(15) VALUE SPACES.
+               05 FS-MOV-GRADE         PIC 9(02) VALUE ZEROES.
        WORKING-STORAGE SECTION.
-       77  WRK-STATUS              PIC 9(03)  VALUE ZEROES.
-       77  WRK-HEADER              PIC X(66)  VALUE SPACES.
-       77  WRK-LINE                PIC 9(04)  VALUE ZEROES.
-       77  WRK-TECLA               PIC X(01)  VALUE SPACES.
+       77  WRK-STATUS                  PIC 9(03)  VALUE ZEROES.
+       77  WRK-HEADER                  PIC X(66)  VALUE SPACES.
+       77  WRK-LINE                    PIC 9(04)  VALUE ZEROES.
+       77  WRK-TECLA                   PIC X(01)  VALUE SPACES.
        LINKAGE SECTION.
        01 PARAMETRES.
-           02 PA-RETURN-CODE PIC 99 VALUE 0.
+           02 PA-RETURN-CODE           PIC 99 VALUE 0.
        SCREEN  SECTION.
        01  CLEAR.
            05 CLEAR-SCREEN.
@@ -38,10 +38,10 @@
                10 LINE 01 COLUMN 01 ERASE EOL.
        01  SHOW-MV.
            05 TITLE-SCREEN.
-               10 LINE 01 COLUMN 01 PIC X(6) ERASE EOL
+               10 LINE 01 COLUMN 01    PIC X(6) ERASE EOL
                   BACKGROUND-COLOR 2 FROM "FILMES".
            05 HEADER-SCREEN.
-               10 LINE 02 COLUMN 01 PIC X(66) ERASE EOL
+               10 LINE 02 COLUMN 01    PIC X(66) ERASE EOL
                   BACKGROUND-COLOR 2 FROM WRK-HEADER.
        PROCEDURE DIVISION USING PARAMETRES.
        MAIN-PROCEDURE.

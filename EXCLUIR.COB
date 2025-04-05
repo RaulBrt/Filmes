@@ -86,7 +86,7 @@
       *=================================================================
            MOVE "EXCLUSAO" TO WRK-MENU-TITLE.
            MOVE "CODIGO: " TO WRK-MENU-ITEM(01).
-           MOVE 1 TO WRK-MENU-SIZE.
+           MOVE 1          TO WRK-MENU-SIZE.
            CALL "MENUS" USING WRK-AREA.
            DISPLAY "PRESSIONE ENTER PARA VOLTAR" AT 1005.
 
@@ -114,33 +114,33 @@
            DISPLAY SHOW-SCREEN.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 04 TO WRK-LINE.
+           MOVE 04     TO WRK-LINE.
 
            STRING "CODIGO: " WRK-MOV-COD INTO WRK-BUFF.
            DISPLAY DTA.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 05 TO WRK-LINE.
+           MOVE 05     TO WRK-LINE.
            STRING "TITULO: " WRK-MOV-TITLE INTO WRK-BUFF.
            DISPLAY DTA.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 06 TO WRK-LINE.
+           MOVE 06     TO WRK-LINE.
            STRING "GENERO: " WRK-MOV-GENRE INTO WRK-BUFF.
            DISPLAY DTA.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 07 TO WRK-LINE.
+           MOVE 07     TO WRK-LINE.
            STRING "DURACAO: " WRK-MOV-LEN INTO WRK-BUFF.
            DISPLAY DTA.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 08 TO WRK-LINE.
+           MOVE 08     TO WRK-LINE.
            STRING "DISTRIBUIDORA: " WRK-MOV-PUBLI INTO WRK-BUFF.
            DISPLAY DTA.
 
            MOVE SPACES TO WRK-BUFF.
-           MOVE 09 TO WRK-LINE.
+           MOVE 09     TO WRK-LINE.
            STRING "NOTA: " WRK-MOV-GRADE INTO WRK-BUFF.
            DISPLAY DTA.
 
